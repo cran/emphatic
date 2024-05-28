@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Specifying Colours</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Specifying Colours</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(emphatic)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>test_df <span class="ot">&lt;-</span> <span class="fu">head</span>(mtcars, <span class="dv">10</span>)</span></code></pre></div>
+<div id="specify-a-single-colour" class="section level2">
+<h2>Specify a single colour</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>test_df <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="fu">hl</span>(<span class="st">&#39;skyblue&#39;</span>)</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span><br />Mazda RX4          <span style="color:#000000;"><span style="background-color:#87ceeb;"> 21.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 160.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 110</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.90</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 2.620</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 16.46</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />Mazda RX4 Wag      <span style="color:#000000;"><span style="background-color:#87ceeb;"> 21.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 160.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 110</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.90</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 2.875</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 17.02</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />Datsun 710         <span style="color:#000000;"><span style="background-color:#87ceeb;"> 22.8</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 108.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  93</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.85</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 2.320</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 18.61</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    1</span></span><br />Hornet 4 Drive     <span style="color:#000000;"><span style="background-color:#87ceeb;"> 21.4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 258.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 110</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.08</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.215</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 19.44</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    1</span></span><br />Hornet Sportabout  <span style="color:#000000;"><span style="background-color:#87ceeb;"> 18.7</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   8</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 360.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 175</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.15</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.440</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 17.02</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    2</span></span><br />Valiant            <span style="color:#000000;"><span style="background-color:#87ceeb;"> 18.1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 225.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 105</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 2.76</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.460</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 20.22</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    1</span></span><br />Duster 360         <span style="color:#000000;"><span style="background-color:#87ceeb;"> 14.3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   8</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 360.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 245</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.21</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.570</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 15.84</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />Merc 240D          <span style="color:#000000;"><span style="background-color:#87ceeb;"> 24.4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 146.7</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  62</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.69</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.190</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 20.00</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    2</span></span><br />Merc 230           <span style="color:#000000;"><span style="background-color:#87ceeb;"> 22.8</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 140.8</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  95</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.92</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.150</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 22.90</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    2</span></span><br />Merc 280           <span style="color:#000000;"><span style="background-color:#87ceeb;"> 19.2</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 167.6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 123</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.92</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.440</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 18.30</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />
+</pre>
+</div>
+<div id="specify-a-vector-of-colours" class="section level2">
+<h2>Specify a vector of colours</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>test_df <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>  <span class="fu">hl</span>(<span class="fu">c</span>(<span class="st">&#39;skyblue&#39;</span>, <span class="st">&#39;hotpink&#39;</span>, <span class="st">&#39;#445566&#39;</span>))</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span><br />Mazda RX4          <span style="color:#000000;"><span style="background-color:#87ceeb;"> 21.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 160.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 110</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.90</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 2.620</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 16.46</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />Mazda RX4 Wag      <span style="color:#000000;"><span style="background-color:#ff69b4;"> 21.0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">   6</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 160.0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 110</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 3.90</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 2.875</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 17.02</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  1</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">    4</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">    4</span></span><br />Datsun 710         <span style="color:#ffffff;"><span style="background-color:#445566;"> 22.8</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">   4</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 108.0</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  93</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 3.85</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 2.320</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 18.61</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  1</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  1</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">    4</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">    1</span></span><br />Hornet 4 Drive     <span style="color:#000000;"><span style="background-color:#87ceeb;"> 21.4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 258.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 110</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.08</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.215</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 19.44</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    1</span></span><br />Hornet Sportabout  <span style="color:#000000;"><span style="background-color:#ff69b4;"> 18.7</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">   8</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 360.0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 175</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 3.15</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 3.440</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 17.02</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">    3</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">    2</span></span><br />Valiant            <span style="color:#ffffff;"><span style="background-color:#445566;"> 18.1</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">   6</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 225.0</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 105</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 2.76</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 3.460</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 20.22</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  1</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  0</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">    3</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">    1</span></span><br />Duster 360         <span style="color:#000000;"><span style="background-color:#87ceeb;"> 14.3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   8</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 360.0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 245</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.21</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.570</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 15.84</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    3</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />Merc 240D          <span style="color:#000000;"><span style="background-color:#ff69b4;"> 24.4</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">   4</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 146.7</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  62</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 3.69</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 3.190</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;"> 20.00</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  1</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">  0</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">    4</span></span><span style="color:#000000;"><span style="background-color:#ff69b4;">    2</span></span><br />Merc 230           <span style="color:#ffffff;"><span style="background-color:#445566;"> 22.8</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">   4</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 140.8</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  95</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 3.92</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 3.150</span></span><span style="color:#ffffff;"><span style="background-color:#445566;"> 22.90</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  1</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">  0</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">    4</span></span><span style="color:#ffffff;"><span style="background-color:#445566;">    2</span></span><br />Merc 280           <span style="color:#000000;"><span style="background-color:#87ceeb;"> 19.2</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">   6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 167.6</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 123</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.92</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 3.440</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;"> 18.30</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  1</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">  0</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><span style="color:#000000;"><span style="background-color:#87ceeb;">    4</span></span><br />
+</pre>
+</div>
+<div id="specify-a-colour-scale-to-apply-to-a-variable" class="section level2">
+<h2>Specify a colour scale to apply to a variable</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>test_df <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="fu">hl</span>(ggplot2<span class="sc">::</span><span class="fu">scale_colour_viridis_c</span>(), <span class="at">cols =</span> disp)</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span><br />Mazda RX4          <span><span> 21.0</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 160.0</span></span><span><span> 110</span></span><span><span> 3.90</span></span><span><span> 2.620</span></span><span><span> 16.46</span></span><span><span>  0</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    4</span></span><br />Mazda RX4 Wag      <span><span> 21.0</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 160.0</span></span><span><span> 110</span></span><span><span> 3.90</span></span><span><span> 2.875</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    4</span></span><br />Datsun 710         <span><span> 22.8</span></span><span><span>   4</span></span><span style="color:#ffffff;"><span style="background-color:#440154;"> 108.0</span></span><span><span>  93</span></span><span><span> 3.85</span></span><span><span> 2.320</span></span><span><span> 18.61</span></span><span><span>  1</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    1</span></span><br />Hornet 4 Drive     <span><span> 21.4</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#23a784;"> 258.0</span></span><span><span> 110</span></span><span><span> 3.08</span></span><span><span> 3.215</span></span><span><span> 19.44</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    1</span></span><br />Hornet Sportabout  <span><span> 18.7</span></span><span><span>   8</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 360.0</span></span><span><span> 175</span></span><span><span> 3.15</span></span><span><span> 3.440</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    2</span></span><br />Valiant            <span><span> 18.1</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;"> 225.0</span></span><span><span> 105</span></span><span><span> 2.76</span></span><span><span> 3.460</span></span><span><span> 20.22</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    1</span></span><br />Duster 360         <span><span> 14.3</span></span><span><span>   8</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 360.0</span></span><span><span> 245</span></span><span><span> 3.21</span></span><span><span> 3.570</span></span><span><span> 15.84</span></span><span><span>  0</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    4</span></span><br />Merc 240D          <span><span> 24.4</span></span><span><span>   4</span></span><span style="color:#ffffff;"><span style="background-color:#44377b;"> 146.7</span></span><span><span>  62</span></span><span><span> 3.69</span></span><span><span> 3.190</span></span><span><span> 20.00</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    2</span></span><br />Merc 230           <span><span> 22.8</span></span><span><span>   4</span></span><span style="color:#ffffff;"><span style="background-color:#453175;"> 140.8</span></span><span><span>  95</span></span><span><span> 3.92</span></span><span><span> 3.150</span></span><span><span> 22.90</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    2</span></span><br />Merc 280           <span><span> 19.2</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#404e88;"> 167.6</span></span><span><span> 123</span></span><span><span> 3.92</span></span><span><span> 3.440</span></span><span><span> 18.30</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    4</span></span><br />
+</pre>
+</div>
+<div id="specify-a-colour-scale-to-apply-to-a-variable-and-apply-the-colouring-to-multiple-columns" class="section level2">
+<h2>Specify a colour scale to apply to a variable, and apply the
+colouring to multiple columns</h2>
+<p>The colourscale is calibrated against only the variable
+<code>disp</code>, but the colouring is applied to multiple columns.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>test_df <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="fu">hl</span>(ggplot2<span class="sc">::</span><span class="fu">scale_colour_viridis_c</span>(), <span class="at">cols =</span> disp, <span class="at">scale_apply =</span> mpg<span class="sc">:</span>drat)</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span><br />Mazda RX4          <span style="color:#ffffff;"><span style="background-color:#414687;"> 21.0</span></span><span style="color:#ffffff;"><span style="background-color:#414687;">   6</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 160.0</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 110</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 3.90</span></span><span><span> 2.620</span></span><span><span> 16.46</span></span><span><span>  0</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    4</span></span><br />Mazda RX4 Wag      <span style="color:#ffffff;"><span style="background-color:#414687;"> 21.0</span></span><span style="color:#ffffff;"><span style="background-color:#414687;">   6</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 160.0</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 110</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 3.90</span></span><span><span> 2.875</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    4</span></span><br />Datsun 710         <span style="color:#ffffff;"><span style="background-color:#440154;"> 22.8</span></span><span style="color:#ffffff;"><span style="background-color:#440154;">   4</span></span><span style="color:#ffffff;"><span style="background-color:#440154;"> 108.0</span></span><span style="color:#ffffff;"><span style="background-color:#440154;">  93</span></span><span style="color:#ffffff;"><span style="background-color:#440154;"> 3.85</span></span><span><span> 2.320</span></span><span><span> 18.61</span></span><span><span>  1</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    1</span></span><br />Hornet 4 Drive     <span style="color:#ffffff;"><span style="background-color:#23a784;"> 21.4</span></span><span style="color:#ffffff;"><span style="background-color:#23a784;">   6</span></span><span style="color:#ffffff;"><span style="background-color:#23a784;"> 258.0</span></span><span style="color:#ffffff;"><span style="background-color:#23a784;"> 110</span></span><span style="color:#ffffff;"><span style="background-color:#23a784;"> 3.08</span></span><span><span> 3.215</span></span><span><span> 19.44</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    1</span></span><br />Hornet Sportabout  <span style="color:#000000;"><span style="background-color:#fde725;"> 18.7</span></span><span style="color:#000000;"><span style="background-color:#fde725;">   8</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 360.0</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 175</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 3.15</span></span><span><span> 3.440</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    2</span></span><br />Valiant            <span style="color:#ffffff;"><span style="background-color:#2c878b;"> 18.1</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;">   6</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;"> 225.0</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;"> 105</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;"> 2.76</span></span><span><span> 3.460</span></span><span><span> 20.22</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    1</span></span><br />Duster 360         <span style="color:#000000;"><span style="background-color:#fde725;"> 14.3</span></span><span style="color:#000000;"><span style="background-color:#fde725;">   8</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 360.0</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 245</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 3.21</span></span><span><span> 3.570</span></span><span><span> 15.84</span></span><span><span>  0</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    4</span></span><br />Merc 240D          <span style="color:#ffffff;"><span style="background-color:#44377b;"> 24.4</span></span><span style="color:#ffffff;"><span style="background-color:#44377b;">   4</span></span><span style="color:#ffffff;"><span style="background-color:#44377b;"> 146.7</span></span><span style="color:#ffffff;"><span style="background-color:#44377b;">  62</span></span><span style="color:#ffffff;"><span style="background-color:#44377b;"> 3.69</span></span><span><span> 3.190</span></span><span><span> 20.00</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    2</span></span><br />Merc 230           <span style="color:#ffffff;"><span style="background-color:#453175;"> 22.8</span></span><span style="color:#ffffff;"><span style="background-color:#453175;">   4</span></span><span style="color:#ffffff;"><span style="background-color:#453175;"> 140.8</span></span><span style="color:#ffffff;"><span style="background-color:#453175;">  95</span></span><span style="color:#ffffff;"><span style="background-color:#453175;"> 3.92</span></span><span><span> 3.150</span></span><span><span> 22.90</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    2</span></span><br />Merc 280           <span style="color:#ffffff;"><span style="background-color:#404e88;"> 19.2</span></span><span style="color:#ffffff;"><span style="background-color:#404e88;">   6</span></span><span style="color:#ffffff;"><span style="background-color:#404e88;"> 167.6</span></span><span style="color:#ffffff;"><span style="background-color:#404e88;"> 123</span></span><span style="color:#ffffff;"><span style="background-color:#404e88;"> 3.92</span></span><span><span> 3.440</span></span><span><span> 18.30</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    4</span></span><br />
+</pre>
+</div>
+<div id="specify-a-colour-scale-to-apply-to-multiple-variables-independently" class="section level2">
+<h2>Specify a colour scale to apply to multiple variables
+independently</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>test_df <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">hl</span>(ggplot2<span class="sc">::</span><span class="fu">scale_colour_viridis_c</span>(), <span class="at">cols =</span> mpg, <span class="at">show_legend =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  <span class="fu">hl</span>(ggplot2<span class="sc">::</span><span class="fu">scale_colour_viridis_c</span>(), <span class="at">cols =</span> disp, <span class="at">show_legend =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span><br />Mazda RX4          <span style="color:#000000;"><span style="background-color:#4ab576;"> 21.0</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 160.0</span></span><span><span> 110</span></span><span><span> 3.90</span></span><span><span> 2.620</span></span><span><span> 16.46</span></span><span><span>  0</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    4</span></span><br />Mazda RX4 Wag      <span style="color:#000000;"><span style="background-color:#4ab576;"> 21.0</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#414687;"> 160.0</span></span><span><span> 110</span></span><span><span> 3.90</span></span><span><span> 2.875</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    4</span></span><br />Datsun 710         <span style="color:#000000;"><span style="background-color:#99d64a;"> 22.8</span></span><span><span>   4</span></span><span style="color:#ffffff;"><span style="background-color:#440154;"> 108.0</span></span><span><span>  93</span></span><span><span> 3.85</span></span><span><span> 2.320</span></span><span><span> 18.61</span></span><span><span>  1</span></span><span><span>  1</span></span><span><span>    4</span></span><span><span>    1</span></span><br />Hornet 4 Drive     <span style="color:#000000;"><span style="background-color:#5bbd6c;"> 21.4</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#23a784;"> 258.0</span></span><span><span> 110</span></span><span><span> 3.08</span></span><span><span> 3.215</span></span><span><span> 19.44</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    1</span></span><br />Hornet Sportabout  <span style="color:#ffffff;"><span style="background-color:#2b808c;"> 18.7</span></span><span><span>   8</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 360.0</span></span><span><span> 175</span></span><span><span> 3.15</span></span><span><span> 3.440</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    2</span></span><br />Valiant            <span style="color:#ffffff;"><span style="background-color:#30728d;"> 18.1</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;"> 225.0</span></span><span><span> 105</span></span><span><span> 2.76</span></span><span><span> 3.460</span></span><span><span> 20.22</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    1</span></span><br />Duster 360         <span style="color:#ffffff;"><span style="background-color:#440154;"> 14.3</span></span><span><span>   8</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 360.0</span></span><span><span> 245</span></span><span><span> 3.21</span></span><span><span> 3.570</span></span><span><span> 15.84</span></span><span><span>  0</span></span><span><span>  0</span></span><span><span>    3</span></span><span><span>    4</span></span><br />Merc 240D          <span style="color:#000000;"><span style="background-color:#fde725;"> 24.4</span></span><span><span>   4</span></span><span style="color:#ffffff;"><span style="background-color:#44377b;"> 146.7</span></span><span><span>  62</span></span><span><span> 3.69</span></span><span><span> 3.190</span></span><span><span> 20.00</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    2</span></span><br />Merc 230           <span style="color:#000000;"><span style="background-color:#99d64a;"> 22.8</span></span><span><span>   4</span></span><span style="color:#ffffff;"><span style="background-color:#453175;"> 140.8</span></span><span><span>  95</span></span><span><span> 3.92</span></span><span><span> 3.150</span></span><span><span> 22.90</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    2</span></span><br />Merc 280           <span style="color:#ffffff;"><span style="background-color:#2b8c8a;"> 19.2</span></span><span><span>   6</span></span><span style="color:#ffffff;"><span style="background-color:#404e88;"> 167.6</span></span><span><span> 123</span></span><span><span> 3.92</span></span><span><span> 3.440</span></span><span><span> 18.30</span></span><span><span>  1</span></span><span><span>  0</span></span><span><span>    4</span></span><span><span>    4</span></span><br /><br /><span><span>mpg: </span></span><span style="color:#ffffff;"><span style="background-color:#461e65;"> 15.00</span></span><span style="color:#ffffff;"><span style="background-color:#424285;"> 16.25</span></span><span style="color:#ffffff;"><span style="background-color:#39638b;"> 17.50</span></span><span style="color:#ffffff;"><span style="background-color:#2b828c;"> 18.75</span></span><span style="color:#ffffff;"><span style="background-color:#279f86;"> 20.00</span></span><span style="color:#000000;"><span style="background-color:#55ba70;"> 21.25</span></span><span style="color:#000000;"><span style="background-color:#83d24f;"> 22.50</span></span><span style="color:#000000;"><span style="background-color:#d6e138;"> 23.75</span></span><br /><span><span>disp: </span></span><span style="color:#ffffff;"><span style="background-color:#461e65;"> 125</span></span><span style="color:#ffffff;"><span style="background-color:#433b7e;"> 150</span></span><span style="color:#ffffff;"><span style="background-color:#3e5589;"> 175</span></span><span style="color:#ffffff;"><span style="background-color:#326f8d;"> 200</span></span><span style="color:#ffffff;"><span style="background-color:#2c878b;"> 225</span></span><span style="color:#ffffff;"><span style="background-color:#279f86;"> 250</span></span><span style="color:#000000;"><span style="background-color:#4ab576;"> 275</span></span><span style="color:#000000;"><span style="background-color:#6fc95d;"> 300</span></span><span style="color:#000000;"><span style="background-color:#a7d847;"> 325</span></span><span style="color:#000000;"><span style="background-color:#e5e332;"> 350</span></span>
+</pre>
+</div>
+<div id="specify-a-colour-scale-to-apply-to-multiple-variables-as-a-whole" class="section level2">
+<h2>Specify a colour scale to apply to multiple variables as a
+whole</h2>
+<p>The scale is calibrated against all data in the nominated
+<code>cols</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>test_df <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">hl</span>(ggplot2<span class="sc">::</span><span class="fu">scale_colour_viridis_c</span>(), <span class="at">cols =</span> <span class="fu">c</span>(wt, gear, carb), <span class="at">show_legend =</span> <span class="cn">TRUE</span>) </span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">                     mpg cyl  disp  hp drat    wt  qsec vs am gear carb</span><br />Mazda RX4          <span><span> 21.0</span></span><span><span>   6</span></span><span><span> 160.0</span></span><span><span> 110</span></span><span><span> 3.90</span></span><span style="color:#ffffff;"><span style="background-color:#299987;"> 2.620</span></span><span><span> 16.46</span></span><span><span>  0</span></span><span><span>  1</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><br />Mazda RX4 Wag      <span><span> 21.0</span></span><span><span>   6</span></span><span><span> 160.0</span></span><span><span> 110</span></span><span><span> 3.90</span></span><span style="color:#000000;"><span style="background-color:#36ad7f;"> 2.875</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  1</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><br />Datsun 710         <span><span> 22.8</span></span><span><span>   4</span></span><span><span> 108.0</span></span><span><span>  93</span></span><span><span> 3.85</span></span><span style="color:#ffffff;"><span style="background-color:#2b818c;"> 2.320</span></span><span><span> 18.61</span></span><span><span>  1</span></span><span><span>  1</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><span style="color:#ffffff;"><span style="background-color:#440154;">    1</span></span><br />Hornet 4 Drive     <span><span> 21.4</span></span><span><span>   6</span></span><span><span> 258.0</span></span><span><span> 110</span></span><span><span> 3.08</span></span><span style="color:#000000;"><span style="background-color:#67c463;"> 3.215</span></span><span><span> 19.44</span></span><span><span>  1</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#4cb575;">    3</span></span><span style="color:#ffffff;"><span style="background-color:#440154;">    1</span></span><br />Hornet Sportabout  <span><span> 18.7</span></span><span><span>   8</span></span><span><span> 360.0</span></span><span><span> 175</span></span><span><span> 3.15</span></span><span style="color:#000000;"><span style="background-color:#85d34f;"> 3.440</span></span><span><span> 17.02</span></span><span><span>  0</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#4cb575;">    3</span></span><span style="color:#ffffff;"><span style="background-color:#37678c;">    2</span></span><br />Valiant            <span><span> 18.1</span></span><span><span>   6</span></span><span><span> 225.0</span></span><span><span> 105</span></span><span><span> 2.76</span></span><span style="color:#000000;"><span style="background-color:#8ad44e;"> 3.460</span></span><span><span> 20.22</span></span><span><span>  1</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#4cb575;">    3</span></span><span style="color:#ffffff;"><span style="background-color:#440154;">    1</span></span><br />Duster 360         <span><span> 14.3</span></span><span><span>   8</span></span><span><span> 360.0</span></span><span><span> 245</span></span><span><span> 3.21</span></span><span style="color:#000000;"><span style="background-color:#a4d848;"> 3.570</span></span><span><span> 15.84</span></span><span><span>  0</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#4cb575;">    3</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><br />Merc 240D          <span><span> 24.4</span></span><span><span>   4</span></span><span><span> 146.7</span></span><span><span>  62</span></span><span><span> 3.69</span></span><span style="color:#000000;"><span style="background-color:#64c265;"> 3.190</span></span><span><span> 20.00</span></span><span><span>  1</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><span style="color:#ffffff;"><span style="background-color:#37678c;">    2</span></span><br />Merc 230           <span><span> 22.8</span></span><span><span>   4</span></span><span><span> 140.8</span></span><span><span>  95</span></span><span><span> 3.92</span></span><span style="color:#000000;"><span style="background-color:#60c069;"> 3.150</span></span><span><span> 22.90</span></span><span><span>  1</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><span style="color:#ffffff;"><span style="background-color:#37678c;">    2</span></span><br />Merc 280           <span><span> 19.2</span></span><span><span>   6</span></span><span><span> 167.6</span></span><span><span> 123</span></span><span><span> 3.92</span></span><span style="color:#000000;"><span style="background-color:#85d34f;"> 3.440</span></span><span><span> 18.30</span></span><span><span>  1</span></span><span><span>  0</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><span style="color:#000000;"><span style="background-color:#fde725;">    4</span></span><br /><br /><span><span>   </span></span><span style="color:#ffffff;"><span style="background-color:#440154;"> 1.0</span></span><span style="color:#ffffff;"><span style="background-color:#433b7e;"> 1.5</span></span><span style="color:#ffffff;"><span style="background-color:#37678c;"> 2.0</span></span><span style="color:#ffffff;"><span style="background-color:#2b9089;"> 2.5</span></span><span style="color:#000000;"><span style="background-color:#4cb575;"> 3.0</span></span><span style="color:#000000;"><span style="background-color:#93d54c;"> 3.5</span></span><span style="color:#000000;"><span style="background-color:#fde725;"> 4.0</span></span>
+</pre>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>svg-animation</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">svg-animation</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(emphatic)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co"># dimensions of data.frame</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>w <span class="ot">&lt;-</span> <span class="dv">8</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Create an emphatic object</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>create_sinus <span class="ot">&lt;-</span> <span class="cf">function</span>(xoff, yoff) {</span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>  <span class="fu">expand.grid</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span>w, <span class="at">y=</span><span class="dv">1</span><span class="sc">:</span>h) <span class="sc">|&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">val =</span> <span class="fu">cos</span>((x <span class="sc">-</span> w<span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span>w <span class="sc">+</span> xoff) <span class="sc">+</span> <span class="fu">sin</span>((y <span class="sc">-</span> h<span class="sc">/</span><span class="dv">3</span>)<span class="sc">/</span>h <span class="sc">+</span> yoff) ) <span class="sc">|&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">val =</span> <span class="fu">round</span>(val, <span class="dv">3</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="fu">spread</span>(x, val) <span class="sc">|&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>y) <span class="sc">|&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>    <span class="fu">setNames</span>(<span class="fu">sprintf</span>(<span class="st">&quot;% 7i&quot;</span>, <span class="fu">seq</span>(w))) <span class="sc">|&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>    <span class="fu">hl</span>(ggplot2<span class="sc">::</span><span class="fu">scale_color_gradient2</span>(), <span class="at">cols =</span> <span class="fu">all</span>())</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>}</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co"># Test</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="fu">create_sinus</span>(<span class="dv">0</span>, <span class="dv">0</span>)</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">           1       2       3       4       5       6       7       8</span><br />1   <span style="color:#000000;"><span style="background-color:#b3aad6;">   0.651</span></span><span style="color:#000000;"><span style="background-color:#afa6d3;">   0.689</span></span><span style="color:#000000;"><span style="background-color:#aca3d2;">   0.713</span></span><span style="color:#000000;"><span style="background-color:#aba2d1;">   0.720</span></span><span style="color:#000000;"><span style="background-color:#aca3d2;">   0.713</span></span><span style="color:#000000;"><span style="background-color:#afa6d3;">   0.689</span></span><span style="color:#000000;"><span style="background-color:#b3aad6;">   0.651</span></span><span style="color:#000000;"><span style="background-color:#b9b1d9;">   0.598</span></span><br />2   <span style="color:#000000;"><span style="background-color:#aea4d3;">   0.699</span></span><span style="color:#000000;"><span style="background-color:#a9a0d0;">   0.738</span></span><span style="color:#000000;"><span style="background-color:#a69dcf;">   0.761</span></span><span style="color:#000000;"><span style="background-color:#a59cce;">   0.769</span></span><span style="color:#000000;"><span style="background-color:#a69dcf;">   0.761</span></span><span style="color:#000000;"><span style="background-color:#a9a0d0;">   0.738</span></span><span style="color:#000000;"><span style="background-color:#aea4d3;">   0.699</span></span><span style="color:#000000;"><span style="background-color:#b4abd6;">   0.646</span></span><br />3   <span style="color:#000000;"><span style="background-color:#a89ed0;">   0.748</span></span><span style="color:#000000;"><span style="background-color:#a39acd;">   0.787</span></span><span style="color:#000000;"><span style="background-color:#a197cc;">   0.810</span></span><span style="color:#000000;"><span style="background-color:#a096cb;">   0.818</span></span><span style="color:#000000;"><span style="background-color:#a197cc;">   0.810</span></span><span style="color:#000000;"><span style="background-color:#a39acd;">   0.787</span></span><span style="color:#000000;"><span style="background-color:#a89ed0;">   0.748</span></span><span style="color:#000000;"><span style="background-color:#aea5d3;">   0.695</span></span><br />4   <span style="color:#000000;"><span style="background-color:#a298cc;">   0.798</span></span><span style="color:#000000;"><span style="background-color:#9e94ca;">   0.836</span></span><span style="color:#000000;"><span style="background-color:#9b91c9;">   0.859</span></span><span style="color:#000000;"><span style="background-color:#9a90c8;">   0.867</span></span><span style="color:#000000;"><span style="background-color:#9b91c9;">   0.859</span></span><span style="color:#000000;"><span style="background-color:#9e94ca;">   0.836</span></span><span style="color:#000000;"><span style="background-color:#a298cc;">   0.798</span></span><span style="color:#000000;"><span style="background-color:#a89fd0;">   0.745</span></span><br />5   <span style="color:#000000;"><span style="background-color:#9c92c9;">   0.847</span></span><span style="color:#000000;"><span style="background-color:#988dc7;">   0.886</span></span><span style="color:#000000;"><span style="background-color:#958bc5;">   0.909</span></span><span style="color:#000000;"><span style="background-color:#948ac5;">   0.917</span></span><span style="color:#000000;"><span style="background-color:#958bc5;">   0.909</span></span><span style="color:#000000;"><span style="background-color:#988dc7;">   0.886</span></span><span style="color:#000000;"><span style="background-color:#9c92c9;">   0.847</span></span><span style="color:#000000;"><span style="background-color:#a399cd;">   0.794</span></span><br />6   <span style="color:#000000;"><span style="background-color:#968cc6;">   0.897</span></span><span style="color:#000000;"><span style="background-color:#9287c4;">   0.936</span></span><span style="color:#000000;"><span style="background-color:#8f85c2;">   0.959</span></span><span style="color:#000000;"><span style="background-color:#8e84c2;">   0.967</span></span><span style="color:#000000;"><span style="background-color:#8f85c2;">   0.959</span></span><span style="color:#000000;"><span style="background-color:#9287c4;">   0.936</span></span><span style="color:#000000;"><span style="background-color:#968cc6;">   0.897</span></span><span style="color:#000000;"><span style="background-color:#9d93c9;">   0.844</span></span><br />7   <span style="color:#000000;"><span style="background-color:#9186c3;">   0.947</span></span><span style="color:#000000;"><span style="background-color:#8c81c0;">   0.986</span></span><span style="color:#000000;"><span style="background-color:#897fbf;">   1.009</span></span><span style="color:#000000;"><span style="background-color:#887ebe;">   1.017</span></span><span style="color:#000000;"><span style="background-color:#897fbf;">   1.009</span></span><span style="color:#000000;"><span style="background-color:#8c81c0;">   0.986</span></span><span style="color:#000000;"><span style="background-color:#9186c3;">   0.947</span></span><span style="color:#000000;"><span style="background-color:#978cc6;">   0.894</span></span><br />8   <span style="color:#000000;"><span style="background-color:#8b80c0;">   0.997</span></span><span style="color:#000000;"><span style="background-color:#867bbd;">   1.036</span></span><span style="color:#000000;"><span style="background-color:#8379bc;">   1.059</span></span><span style="color:#000000;"><span style="background-color:#8278bb;">   1.067</span></span><span style="color:#000000;"><span style="background-color:#8379bc;">   1.059</span></span><span style="color:#000000;"><span style="background-color:#867bbd;">   1.036</span></span><span style="color:#000000;"><span style="background-color:#8b80c0;">   0.997</span></span><span style="color:#000000;"><span style="background-color:#9186c3;">   0.944</span></span><br />9   <span style="color:#000000;"><span style="background-color:#857abd;">   1.047</span></span><span style="color:#000000;"><span style="background-color:#8076ba;">   1.085</span></span><span style="color:#ffffff;"><span style="background-color:#7d73b9;">   1.109</span></span><span style="color:#ffffff;"><span style="background-color:#7c72b8;">   1.116</span></span><span style="color:#ffffff;"><span style="background-color:#7d73b9;">   1.109</span></span><span style="color:#000000;"><span style="background-color:#8076ba;">   1.085</span></span><span style="color:#000000;"><span style="background-color:#857abd;">   1.047</span></span><span style="color:#000000;"><span style="background-color:#8b80c0;">   0.994</span></span><br />10  <span style="color:#ffffff;"><span style="background-color:#7f74b9;">   1.096</span></span><span style="color:#ffffff;"><span style="background-color:#7a70b7;">   1.135</span></span><span style="color:#ffffff;"><span style="background-color:#776db5;">   1.158</span></span><span style="color:#ffffff;"><span style="background-color:#766cb5;">   1.166</span></span><span style="color:#ffffff;"><span style="background-color:#776db5;">   1.158</span></span><span style="color:#ffffff;"><span style="background-color:#7a70b7;">   1.135</span></span><span style="color:#ffffff;"><span style="background-color:#7f74b9;">   1.096</span></span><span style="color:#000000;"><span style="background-color:#857bbd;">   1.043</span></span><br />11  <span style="color:#ffffff;"><span style="background-color:#796fb6;">   1.145</span></span><span style="color:#ffffff;"><span style="background-color:#746ab4;">   1.184</span></span><span style="color:#ffffff;"><span style="background-color:#7167b2;">   1.207</span></span><span style="color:#ffffff;"><span style="background-color:#7067b2;">   1.215</span></span><span style="color:#ffffff;"><span style="background-color:#7167b2;">   1.207</span></span><span style="color:#ffffff;"><span style="background-color:#746ab4;">   1.184</span></span><span style="color:#ffffff;"><span style="background-color:#796fb6;">   1.145</span></span><span style="color:#000000;"><span style="background-color:#7f75ba;">   1.093</span></span><br />12  <span style="color:#ffffff;"><span style="background-color:#7369b3;">   1.194</span></span><span style="color:#ffffff;"><span style="background-color:#6e65b1;">   1.232</span></span><span style="color:#ffffff;"><span style="background-color:#6b62af;">   1.256</span></span><span style="color:#ffffff;"><span style="background-color:#6a61af;">   1.264</span></span><span style="color:#ffffff;"><span style="background-color:#6b62af;">   1.256</span></span><span style="color:#ffffff;"><span style="background-color:#6e65b1;">   1.232</span></span><span style="color:#ffffff;"><span style="background-color:#7369b3;">   1.194</span></span><span style="color:#ffffff;"><span style="background-color:#796fb7;">   1.141</span></span><br />13  <span style="color:#ffffff;"><span style="background-color:#6d63b0;">   1.242</span></span><span style="color:#ffffff;"><span style="background-color:#685fae;">   1.280</span></span><span style="color:#ffffff;"><span style="background-color:#655cac;">   1.304</span></span><span style="color:#ffffff;"><span style="background-color:#645cac;">   1.311</span></span><span style="color:#ffffff;"><span style="background-color:#655cac;">   1.304</span></span><span style="color:#ffffff;"><span style="background-color:#685fae;">   1.280</span></span><span style="color:#ffffff;"><span style="background-color:#6d63b0;">   1.242</span></span><span style="color:#ffffff;"><span style="background-color:#746ab3;">   1.189</span></span><br />14  <span style="color:#ffffff;"><span style="background-color:#675ead;">   1.289</span></span><span style="color:#ffffff;"><span style="background-color:#625aab;">   1.327</span></span><span style="color:#ffffff;"><span style="background-color:#5f57a9;">   1.351</span></span><span style="color:#ffffff;"><span style="background-color:#5e56a9;">   1.359</span></span><span style="color:#ffffff;"><span style="background-color:#5f57a9;">   1.351</span></span><span style="color:#ffffff;"><span style="background-color:#625aab;">   1.327</span></span><span style="color:#ffffff;"><span style="background-color:#675ead;">   1.289</span></span><span style="color:#ffffff;"><span style="background-color:#6e64b0;">   1.236</span></span><br />15  <span style="color:#ffffff;"><span style="background-color:#6159aa;">   1.335</span></span><span style="color:#ffffff;"><span style="background-color:#5c55a8;">   1.374</span></span><span style="color:#ffffff;"><span style="background-color:#5952a6;">   1.397</span></span><span style="color:#ffffff;"><span style="background-color:#5851a6;">   1.405</span></span><span style="color:#ffffff;"><span style="background-color:#5952a6;">   1.397</span></span><span style="color:#ffffff;"><span style="background-color:#5c55a8;">   1.374</span></span><span style="color:#ffffff;"><span style="background-color:#6159aa;">   1.335</span></span><span style="color:#ffffff;"><span style="background-color:#685fae;">   1.282</span></span><br />16  <span style="color:#ffffff;"><span style="background-color:#5c54a7;">   1.380</span></span><span style="color:#ffffff;"><span style="background-color:#5750a5;">   1.419</span></span><span style="color:#ffffff;"><span style="background-color:#534da3;">   1.442</span></span><span style="color:#ffffff;"><span style="background-color:#524ca3;">   1.450</span></span><span style="color:#ffffff;"><span style="background-color:#534da3;">   1.442</span></span><span style="color:#ffffff;"><span style="background-color:#5750a5;">   1.419</span></span><span style="color:#ffffff;"><span style="background-color:#5c54a7;">   1.380</span></span><span style="color:#ffffff;"><span style="background-color:#625aab;">   1.327</span></span><br />17  <span style="color:#ffffff;"><span style="background-color:#564fa4;">   1.424</span></span><span style="color:#ffffff;"><span style="background-color:#514ba2;">   1.463</span></span><span style="color:#ffffff;"><span style="background-color:#4d48a0;">   1.486</span></span><span style="color:#ffffff;"><span style="background-color:#4c47a0;">   1.494</span></span><span style="color:#ffffff;"><span style="background-color:#4d48a0;">   1.486</span></span><span style="color:#ffffff;"><span style="background-color:#514ba2;">   1.463</span></span><span style="color:#ffffff;"><span style="background-color:#564fa4;">   1.424</span></span><span style="color:#ffffff;"><span style="background-color:#5d55a8;">   1.372</span></span><br />18  <span style="color:#ffffff;"><span style="background-color:#504aa2;">   1.467</span></span><span style="color:#ffffff;"><span style="background-color:#4b469f;">   1.506</span></span><span style="color:#ffffff;"><span style="background-color:#47449e;">   1.529</span></span><span style="color:#ffffff;"><span style="background-color:#46439d;">   1.537</span></span><span style="color:#ffffff;"><span style="background-color:#47449e;">   1.529</span></span><span style="color:#ffffff;"><span style="background-color:#4b469f;">   1.506</span></span><span style="color:#ffffff;"><span style="background-color:#504aa2;">   1.467</span></span><span style="color:#ffffff;"><span style="background-color:#5750a5;">   1.414</span></span><br />19  <span style="color:#ffffff;"><span style="background-color:#4a469f;">   1.509</span></span><span style="color:#ffffff;"><span style="background-color:#45429d;">   1.547</span></span><span style="color:#ffffff;"><span style="background-color:#413f9b;">   1.571</span></span><span style="color:#ffffff;"><span style="background-color:#403e9b;">   1.578</span></span><span style="color:#ffffff;"><span style="background-color:#413f9b;">   1.571</span></span><span style="color:#ffffff;"><span style="background-color:#45429d;">   1.547</span></span><span style="color:#ffffff;"><span style="background-color:#4a469f;">   1.509</span></span><span style="color:#ffffff;"><span style="background-color:#524ba2;">   1.456</span></span><br />20  <span style="color:#ffffff;"><span style="background-color:#45419c;">   1.549</span></span><span style="color:#ffffff;"><span style="background-color:#3f3d9a;">   1.587</span></span><span style="color:#ffffff;"><span style="background-color:#3b3b98;">   1.611</span></span><span style="color:#ffffff;"><span style="background-color:#3a3a98;">   1.618</span></span><span style="color:#ffffff;"><span style="background-color:#3b3b98;">   1.611</span></span><span style="color:#ffffff;"><span style="background-color:#3f3d9a;">   1.587</span></span><span style="color:#ffffff;"><span style="background-color:#45419c;">   1.549</span></span><span style="color:#ffffff;"><span style="background-color:#4c47a0;">   1.496</span></span><br />
+</pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Loop over x,y and create a list of emphatic objects</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>groups <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map2</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="fu">cos</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span><span class="sc">*</span>pi , <span class="at">length.out =</span> <span class="dv">60</span>)),</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="fu">sin</span>(<span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span><span class="sc">*</span>pi, <span class="dv">2</span><span class="sc">*</span>pi, <span class="at">length.out =</span> <span class="dv">60</span>)),</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>  <span class="sc">~</span><span class="fu">create_sinus</span>(.x, .y)</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>)</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co"># Save the list as an SVG animation to file</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="cf">if</span> (<span class="cn">FALSE</span>) {</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="fu">as_svg_anim</span>(groups, <span class="at">duration =</span> <span class="fl">0.1</span>, <span class="at">playback =</span> <span class="st">&#39;infinite&#39;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="fu">writeLines</span>(<span class="st">&quot;sinus.svg&quot;</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>}</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co"># Play the SVG animation back in the Rstudio console</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="cf">if</span> (<span class="cn">FALSE</span>) {</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a>  <span class="fu">as_svg_anim</span>(groups, <span class="at">duration =</span> <span class="fl">0.1</span>, <span class="at">playback =</span> <span class="st">&#39;infinite&#39;</span>, <span class="at">browsable =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>}</span></code></pre></div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

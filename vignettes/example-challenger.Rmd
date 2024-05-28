@@ -1,0 +1,120 @@
+---
+title: "Example - Challenger O-Ring Failure"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example - Challenger O-Ring Failure}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(dplyr)
+library(ggplot2)
+library(emphatic)
+```
+
+
+Challenger O-Ring data
+------------------------------------------------------------------------------
+
+The raw challenger o-ring data shows the o-ring erosion and blow-by events on
+shuttle launches leading up to the Challenger disaster.
+
+This dataset was sourced from [tufte](http://williamwolff.org/wp-content/uploads/2013/01/tufte-challenger-1997.pdf)
+
+Presented in order of launch date, there are obvious signs of damage on some flights,
+but it's difficult to see trends in this presentation.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(emphatic)
+
+challenger
+```
+
+
+Ordering by temperature
+------------------------------------------------------------------------------
+
+When ordered by decreasing temperature, a trend is somewhat apparent in the
+data i.e. lower temperatures have more incidents.
+
+Finding this trend still requires close inspection of the data.
+
+```{r}
+challenger %>% 
+  arrange(desc(temp))
+```
+
+
+
+First Iteration with `{emphatic}`
+------------------------------------------------------------------------------
+
+* Arrange by temperature
+* Highlight the temperature range from cold to hot
+* Highlight each row by the damage rating
+
+The cluster of damage at lower temperatures is now much more visually apparent.
+
+```{r}
+
+challenger %>%
+  arrange(desc(temp)) %>%
+  hl(palette = scale_color_viridis_c(option = 'B'), cols = 'temp') %>%
+  hl(
+    scale_color_gradient(low = 'pink', high = 'red'),
+    rows = damage > 0,
+    cols = damage
+  ) 
+```
+
+
+
+
+
+Second Iteration with `{emphatic}`
+------------------------------------------------------------------------------
+
+* Expand temperature range to highlight the full limits of possible flight conditions
+* Highlight the Challenger launch temperature in grey (31 degrees)
+* add a colorbar legend for `damage`
+* It is now obvious that no real information is available at this low temperature,
+  but all readings at low temperatures have issues.
+
+```{r}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Expand temperature range to include challenger launch temperature
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+challenger_expanded <- challenger %>%
+  mutate(temp = factor(temp, levels = 30:81)) %>%
+  tidyr::complete(temp) %>%
+  arrange(desc(temp)) %>%
+  as.data.frame() %>%
+  mutate(temp = as.numeric(levels(temp))[temp]) %>%
+  select(flight, everything()) %>%
+  mutate(
+    flight = if_else(temp == 31, "Challenger", flight)
+  )
+
+
+challenger_expanded %>% 
+  hl(scale_color_viridis_c(option = 'B'), cols = temp, show_legend = TRUE) %>%
+  hl(
+    scale_color_gradient(low = 'lightblue', high = 'orange'),
+    rows = !is.na(damage),
+    cols = damage,
+    show_legend = TRUE
+  ) %>%
+  hl('firebrick1', rows = temp == 31, cols = flight) %>%
+  hl_adjust(na = '')
+```
+
+
+
+

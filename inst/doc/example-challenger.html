@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Example - Challenger O-Ring Failure</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Example - Challenger O-Ring Failure</h1>
+
+
+
+<div id="challenger-o-ring-data" class="section level2">
+<h2>Challenger O-Ring data</h2>
+<p>The raw challenger o-ring data shows the o-ring erosion and blow-by
+events on shuttle launches leading up to the Challenger disaster.</p>
+<p>This dataset was sourced from <a href="http://williamwolff.org/wp-content/uploads/2013/01/tufte-challenger-1997.pdf">tufte</a></p>
+<p>Presented in order of launch date, there are obvious signs of damage
+on some flights, but it’s difficult to see trends in this
+presentation.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(emphatic)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>challenger</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt;    flight temp erosion blowby damage       date</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; 1       1   66       0      0      0 1981-04-12</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; 2       2   70       1      0      4 1981-11-12</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; 3       3   69       0      0      0 1982-03-22</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; 4       5   68       0      0      0 1982-11-11</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; 5       6   67       0      0      0 1983-04-04</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; 6       7   72       0      0      0 1983-06-18</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; 7       8   73       0      0      0 1983-08-30</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; 8       9   70       0      0      0 1983-11-28</span></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="co">#&gt; 9    41-B   57       1      0      4 1984-02-03</span></span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="co">#&gt; 10   41-C   63       1      0      2 1984-04-06</span></span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="co">#&gt; 11   41-D   70       1      0      4 1984-08-30</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="co">#&gt; 12   41-G   78       0      0      0 1984-10-05</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="co">#&gt; 13   51-A   67       0      0      0 1984-11-08</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; 14   51-C   53       3      2     11 1985-01-24</span></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; 15   51-D   67       0      0      0 1985-04-12</span></span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt; 16   51-B   75       0      0      0 1985-04-29</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; 17   51-G   70       0      0      0 1985-06-17</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; 18   51-F   81       0      0      0 1985-07-29</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; 19   51-I   76       0      0      0 1985-08-27</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; 20   51-J   79       0      0      0 1985-10-03</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; 21   61-A   75       0      2      4 1985-10-30</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; 22   61-B   76       0      0      0 1985-11-26</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt; 23   61-C   58       1      0      4 1986-01-12</span></span></code></pre></div>
+</div>
+<div id="ordering-by-temperature" class="section level2">
+<h2>Ordering by temperature</h2>
+<p>When ordered by decreasing temperature, a trend is somewhat apparent
+in the data i.e. lower temperatures have more incidents.</p>
+<p>Finding this trend still requires close inspection of the data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>challenger <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(temp))</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt;    flight temp erosion blowby damage       date</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; 1    51-F   81       0      0      0 1985-07-29</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; 2    51-J   79       0      0      0 1985-10-03</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; 3    41-G   78       0      0      0 1984-10-05</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; 4    51-I   76       0      0      0 1985-08-27</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a><span class="co">#&gt; 5    61-B   76       0      0      0 1985-11-26</span></span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; 6    51-B   75       0      0      0 1985-04-29</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co">#&gt; 7    61-A   75       0      2      4 1985-10-30</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a><span class="co">#&gt; 8       8   73       0      0      0 1983-08-30</span></span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a><span class="co">#&gt; 9       7   72       0      0      0 1983-06-18</span></span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; 10      2   70       1      0      4 1981-11-12</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a><span class="co">#&gt; 11      9   70       0      0      0 1983-11-28</span></span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; 12   41-D   70       1      0      4 1984-08-30</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co">#&gt; 13   51-G   70       0      0      0 1985-06-17</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a><span class="co">#&gt; 14      3   69       0      0      0 1982-03-22</span></span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="co">#&gt; 15      5   68       0      0      0 1982-11-11</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="co">#&gt; 16      6   67       0      0      0 1983-04-04</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; 17   51-A   67       0      0      0 1984-11-08</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="co">#&gt; 18   51-D   67       0      0      0 1985-04-12</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a><span class="co">#&gt; 19      1   66       0      0      0 1981-04-12</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a><span class="co">#&gt; 20   41-C   63       1      0      2 1984-04-06</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a><span class="co">#&gt; 21   61-C   58       1      0      4 1986-01-12</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a><span class="co">#&gt; 22   41-B   57       1      0      4 1984-02-03</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a><span class="co">#&gt; 23   51-C   53       3      2     11 1985-01-24</span></span></code></pre></div>
+</div>
+<div id="first-iteration-with-emphatic" class="section level2">
+<h2>First Iteration with <code>{emphatic}</code></h2>
+<ul>
+<li>Arrange by temperature</li>
+<li>Highlight the temperature range from cold to hot</li>
+<li>Highlight each row by the damage rating</li>
+</ul>
+<p>The cluster of damage at lower temperatures is now much more visually
+apparent.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>challenger <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(temp)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">hl</span>(<span class="at">palette =</span> <span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">&#39;B&#39;</span>), <span class="at">cols =</span> <span class="st">&#39;temp&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">hl</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">&#39;pink&#39;</span>, <span class="at">high =</span> <span class="st">&#39;red&#39;</span>),</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">rows =</span> damage <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">cols =</span> damage</span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  ) </span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">     flight temp erosion blowby damage       date</span><br />1   <span><span>   51-F</span></span><span style="color:#000000;"><span style="background-color:#fcffa4;">   81</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-07-29</span></span><br />2   <span><span>   51-J</span></span><span style="color:#000000;"><span style="background-color:#ffdf75;">   79</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-10-03</span></span><br />3   <span><span>   41-G</span></span><span style="color:#000000;"><span style="background-color:#ffcf5d;">   78</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1984-10-05</span></span><br />4   <span><span>   51-I</span></span><span style="color:#000000;"><span style="background-color:#feaf27;">   76</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-08-27</span></span><br />5   <span><span>   61-B</span></span><span style="color:#000000;"><span style="background-color:#feaf27;">   76</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-11-26</span></span><br />6   <span><span>   51-B</span></span><span style="color:#000000;"><span style="background-color:#fa9f13;">   75</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-04-29</span></span><br />7   <span><span>   61-A</span></span><span style="color:#000000;"><span style="background-color:#fa9f13;">   75</span></span><span><span>       0</span></span><span><span>      2</span></span><span style="color:#000000;"><span style="background-color:#ffa39f;">      4</span></span><span><span> 1985-10-30</span></span><br />8   <span><span>      8</span></span><span style="color:#000000;"><span style="background-color:#ef832a;">   73</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1983-08-30</span></span><br />9   <span><span>      7</span></span><span style="color:#000000;"><span style="background-color:#ea7430;">   72</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1983-06-18</span></span><br />10  <span><span>      2</span></span><span style="color:#ffffff;"><span style="background-color:#de5439;">   70</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#ffa39f;">      4</span></span><span><span> 1981-11-12</span></span><br />11  <span><span>      9</span></span><span style="color:#ffffff;"><span style="background-color:#de5439;">   70</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1983-11-28</span></span><br />12  <span><span>   41-D</span></span><span style="color:#ffffff;"><span style="background-color:#de5439;">   70</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#ffa39f;">      4</span></span><span><span> 1984-08-30</span></span><br />13  <span><span>   51-G</span></span><span style="color:#ffffff;"><span style="background-color:#de5439;">   70</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-06-17</span></span><br />14  <span><span>      3</span></span><span style="color:#ffffff;"><span style="background-color:#d34b42;">   69</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1982-03-22</span></span><br />15  <span><span>      5</span></span><span style="color:#ffffff;"><span style="background-color:#c6434a;">   68</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1982-11-11</span></span><br />16  <span><span>      6</span></span><span style="color:#ffffff;"><span style="background-color:#b93b53;">   67</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1983-04-04</span></span><br />17  <span><span>   51-A</span></span><span style="color:#ffffff;"><span style="background-color:#b93b53;">   67</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1984-11-08</span></span><br />18  <span><span>   51-D</span></span><span style="color:#ffffff;"><span style="background-color:#b93b53;">   67</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1985-04-12</span></span><br />19  <span><span>      1</span></span><span style="color:#ffffff;"><span style="background-color:#ac335a;">   66</span></span><span><span>       0</span></span><span><span>      0</span></span><span><span>      0</span></span><span><span> 1981-04-12</span></span><br />20  <span><span>   41-C</span></span><span style="color:#ffffff;"><span style="background-color:#831f67;">   63</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#ffc0cb;">      2</span></span><span><span> 1984-04-06</span></span><br />21  <span><span>   61-C</span></span><span style="color:#ffffff;"><span style="background-color:#3c0c5d;">   58</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#ffa39f;">      4</span></span><span><span> 1986-01-12</span></span><br />22  <span><span>   41-B</span></span><span style="color:#ffffff;"><span style="background-color:#310e4b;">   57</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#ffa39f;">      4</span></span><span><span> 1984-02-03</span></span><br />23  <span><span>   51-C</span></span><span style="color:#ffffff;"><span style="background-color:#000004;">   53</span></span><span><span>       3</span></span><span><span>      2</span></span><span style="color:#ffffff;"><span style="background-color:#ff0000;">     11</span></span><span><span> 1985-01-24</span></span><br />
+</pre>
+</div>
+<div id="second-iteration-with-emphatic" class="section level2">
+<h2>Second Iteration with <code>{emphatic}</code></h2>
+<ul>
+<li>Expand temperature range to highlight the full limits of possible
+flight conditions</li>
+<li>Highlight the Challenger launch temperature in grey (31
+degrees)</li>
+<li>add a colorbar legend for <code>damage</code></li>
+<li>It is now obvious that no real information is available at this low
+temperature, but all readings at low temperatures have issues.</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co"># Expand temperature range to include challenger launch temperature</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>challenger_expanded <span class="ot">&lt;-</span> challenger <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">factor</span>(temp, <span class="at">levels =</span> <span class="dv">30</span><span class="sc">:</span><span class="dv">81</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">complete</span>(temp) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(temp)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">as.numeric</span>(<span class="fu">levels</span>(temp))[temp]) <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">select</span>(flight, <span class="fu">everything</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    <span class="at">flight =</span> <span class="fu">if_else</span>(temp <span class="sc">==</span> <span class="dv">31</span>, <span class="st">&quot;Challenger&quot;</span>, flight)</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>  )</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>challenger_expanded <span class="sc">%&gt;%</span> </span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>  <span class="fu">hl</span>(<span class="fu">scale_color_viridis_c</span>(<span class="at">option =</span> <span class="st">&#39;B&#39;</span>), <span class="at">cols =</span> temp, <span class="at">show_legend =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a>  <span class="fu">hl</span>(</span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a>    <span class="fu">scale_color_gradient</span>(<span class="at">low =</span> <span class="st">&#39;lightblue&#39;</span>, <span class="at">high =</span> <span class="st">&#39;orange&#39;</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    <span class="at">rows =</span> <span class="sc">!</span><span class="fu">is.na</span>(damage),</span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>    <span class="at">cols =</span> damage,</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>    <span class="at">show_legend =</span> <span class="cn">TRUE</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>  <span class="fu">hl</span>(<span class="st">&#39;firebrick1&#39;</span>, <span class="at">rows =</span> temp <span class="sc">==</span> <span class="dv">31</span>, <span class="at">cols =</span> flight) <span class="sc">%&gt;%</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>  <span class="fu">hl_adjust</span>(<span class="at">na =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<pre style>
+<span style="text-decoration:underline;">         flight temp erosion blowby damage       date</span><br />1   <span><span>       51-F</span></span><span style="color:#000000;"><span style="background-color:#fcffa4;">   81</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-07-29</span></span><br />2   <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#fef697;">   80</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />3   <span><span>       51-J</span></span><span style="color:#000000;"><span style="background-color:#ffed8a;">   79</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-10-03</span></span><br />4   <span><span>       41-G</span></span><span style="color:#000000;"><span style="background-color:#ffe57d;">   78</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1984-10-05</span></span><br />5   <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#ffdc71;">   77</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />6   <span><span>       51-I</span></span><span style="color:#000000;"><span style="background-color:#ffd363;">   76</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-08-27</span></span><br />7   <span><span>       61-B</span></span><span style="color:#000000;"><span style="background-color:#ffd363;">   76</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-11-26</span></span><br />8   <span><span>       51-B</span></span><span style="color:#000000;"><span style="background-color:#ffca56;">   75</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-04-29</span></span><br />9   <span><span>       61-A</span></span><span style="color:#000000;"><span style="background-color:#ffca56;">   75</span></span><span><span>       0</span></span><span><span>      2</span></span><span style="color:#000000;"><span style="background-color:#dbc6a0;">      4</span></span><span><span> 1985-10-30</span></span><br />10  <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#ffc148;">   74</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />11  <span><span>          8</span></span><span style="color:#000000;"><span style="background-color:#ffb939;">   73</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1983-08-30</span></span><br />12  <span><span>          7</span></span><span style="color:#000000;"><span style="background-color:#feb029;">   72</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1983-06-18</span></span><br />13  <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#fca711;">   71</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />14  <span><span>          2</span></span><span style="color:#000000;"><span style="background-color:#fa9f14;">   70</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#dbc6a0;">      4</span></span><span><span> 1981-11-12</span></span><br />15  <span><span>          9</span></span><span style="color:#000000;"><span style="background-color:#fa9f14;">   70</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1983-11-28</span></span><br />16  <span><span>       41-D</span></span><span style="color:#000000;"><span style="background-color:#fa9f14;">   70</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#dbc6a0;">      4</span></span><span><span> 1984-08-30</span></span><br />17  <span><span>       51-G</span></span><span style="color:#000000;"><span style="background-color:#fa9f14;">   70</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-06-17</span></span><br />18  <span><span>          3</span></span><span style="color:#000000;"><span style="background-color:#f7971c;">   69</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1982-03-22</span></span><br />19  <span><span>          5</span></span><span style="color:#000000;"><span style="background-color:#f48f22;">   68</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1982-11-11</span></span><br />20  <span><span>          6</span></span><span style="color:#000000;"><span style="background-color:#f18727;">   67</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1983-04-04</span></span><br />21  <span><span>       51-A</span></span><span style="color:#000000;"><span style="background-color:#f18727;">   67</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1984-11-08</span></span><br />22  <span><span>       51-D</span></span><span style="color:#000000;"><span style="background-color:#f18727;">   67</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1985-04-12</span></span><br />23  <span><span>          1</span></span><span style="color:#000000;"><span style="background-color:#ee7f2b;">   66</span></span><span><span>       0</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#add8e6;">      0</span></span><span><span> 1981-04-12</span></span><br />24  <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#eb772f;">   65</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />25  <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#e86f32;">   64</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />26  <span><span>       41-C</span></span><span style="color:#000000;"><span style="background-color:#e56735;">   63</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#c8cfc3;">      2</span></span><span><span> 1984-04-06</span></span><br />27  <span><span>           </span></span><span style="color:#000000;"><span style="background-color:#e25e37;">   62</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />28  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#de5539;">   61</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />29  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#d94e3d;">   60</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />30  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#d24a42;">   59</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />31  <span><span>       61-C</span></span><span style="color:#ffffff;"><span style="background-color:#cb4647;">   58</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#dbc6a0;">      4</span></span><span><span> 1986-01-12</span></span><br />32  <span><span>       41-B</span></span><span style="color:#ffffff;"><span style="background-color:#c4414c;">   57</span></span><span><span>       1</span></span><span><span>      0</span></span><span style="color:#000000;"><span style="background-color:#dbc6a0;">      4</span></span><span><span> 1984-02-03</span></span><br />33  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#bd3d50;">   56</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />34  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#b63955;">   55</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />35  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#ae3559;">   54</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />36  <span><span>       51-C</span></span><span style="color:#ffffff;"><span style="background-color:#a7315d;">   53</span></span><span><span>       3</span></span><span><span>      2</span></span><span style="color:#000000;"><span style="background-color:#ffa500;">     11</span></span><span><span> 1985-01-24</span></span><br />37  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#9f2c61;">   52</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />38  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#982865;">   51</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />39  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#902567;">   50</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />40  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#892267;">   49</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />41  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#811f67;">   48</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />42  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#7a1c68;">   47</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />43  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#721968;">   46</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />44  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#6a1668;">   45</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />45  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#621368;">   44</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />46  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#5a1168;">   43</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />47  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#520e68;">   42</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />48  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#490c68;">   41</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />49  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#410a66;">   40</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />50  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#3b0c5c;">   39</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />51  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#350d52;">   38</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />52  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#300e48;">   37</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />53  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#2a0e3f;">   36</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />54  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#240e35;">   35</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />55  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#1f0d2c;">   34</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />56  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#1a0a23;">   33</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />57  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#15071b;">   32</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />58  <span style="color:#ffffff;"><span style="background-color:#ff3030;"> Challenger</span></span><span style="color:#ffffff;"><span style="background-color:#0c0312;">   31</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br />59  <span><span>           </span></span><span style="color:#ffffff;"><span style="background-color:#000004;">   30</span></span><span><span>        </span></span><span><span>       </span></span><span><span>       </span></span><span><span>           </span></span><br /><br /><span><span>temp: </span></span><span style="color:#ffffff;"><span style="background-color:#000004;"> 30</span></span><span style="color:#ffffff;"><span style="background-color:#240e35;"> 35</span></span><span style="color:#ffffff;"><span style="background-color:#410a66;"> 40</span></span><span style="color:#ffffff;"><span style="background-color:#6a1668;"> 45</span></span><span style="color:#ffffff;"><span style="background-color:#902567;"> 50</span></span><span style="color:#ffffff;"><span style="background-color:#b63955;"> 55</span></span><span style="color:#ffffff;"><span style="background-color:#d94e3d;"> 60</span></span><span style="color:#000000;"><span style="background-color:#eb772f;"> 65</span></span><span style="color:#000000;"><span style="background-color:#fa9f14;"> 70</span></span><span style="color:#000000;"><span style="background-color:#ffca56;"> 75</span></span><span style="color:#000000;"><span style="background-color:#fef697;"> 80</span></span><br /><span><span>damage: </span></span><span style="color:#000000;"><span style="background-color:#add8e6;">  0.00</span></span><span style="color:#000000;"><span style="background-color:#bfd2d0;">  1.25</span></span><span style="color:#000000;"><span style="background-color:#cdccba;">  2.50</span></span><span style="color:#000000;"><span style="background-color:#d9c7a5;">  3.75</span></span><span style="color:#000000;"><span style="background-color:#e2c18f;">  5.00</span></span><span style="color:#000000;"><span style="background-color:#eabb79;">  6.25</span></span><span style="color:#000000;"><span style="background-color:#f1b562;">  7.50</span></span><span style="color:#000000;"><span style="background-color:#f7b04a;">  8.75</span></span><span style="color:#000000;"><span style="background-color:#fcaa2d;"> 10.00</span></span>
+</pre>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
